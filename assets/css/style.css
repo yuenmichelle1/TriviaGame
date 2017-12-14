@@ -1,0 +1,22 @@
+body {
+	background-image: url("../images/Friends_Background_img.png");
+	font-family: 'Shadows Into Light', cursive, sans-serif;
+	color: white;
+	font-size: 30px;
+}
+
+h1 {
+	font-size: 80px;
+}
+
+button{
+	width: 200px;
+	height: 100px;
+	color: black;
+	background-color: white;
+	font-size: 50px;
+}
+
+.contains-btn {
+	margin-top: 200px;
+}

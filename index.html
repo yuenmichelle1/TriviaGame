@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Friends Trivia</title>
+     <!--Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!--Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light" rel="stylesheet">
+    <!--- CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+     <!---JQuery -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 center-block text-center">
+                <h1>Friends Trivia!</h1>
+            </div>
+        </div>
+        <div class="row contains-btn">
+            <div class="col-md-5"></div>
+            <div class="col-md-2 text-center">
+                <button id="startButton"> Start</button>
+            </div>
+            <div class="col-md-5"></div>
+        </div>
+        <div id="timer" class="row hidden game text-center"> </div>
+        <div id="question" class="row hidden game text-center">Nothing shown but will be Question</div>
+        <div id="answers" class="row hidden game text-center">Nothing Shown but will be possible answers</div>
+    </div>
+    <script src="assets/javascript/app.js"></script>
+</body>
+</html>
