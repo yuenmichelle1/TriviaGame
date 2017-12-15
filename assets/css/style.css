@@ -1,7 +1,7 @@
 body {
 	background-image: url("../images/Friends_Background_img.png");
 	font-family: 'Shadows Into Light', cursive, sans-serif;
-	color: white;
+	color: rgb(244, 240, 255);
 	font-size: 30px;
 }
 
@@ -11,7 +11,7 @@ h1 {
 
 button{
 	width: 200px;
-	height: 100px;
+	height: 90px;
 	color: black;
 	background-color: white;
 	font-size: 50px;
@@ -19,4 +19,15 @@ button{
 
 .contains-btn {
 	margin-top: 200px;
+}
+.choice{
+	font-size: 20px;
+	margin-bottom: 20px;
+	height: 50px;
+
+}
+
+#question{
+	margin: 30px auto;
+	background-color: black;
 }

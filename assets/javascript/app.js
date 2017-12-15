@@ -54,21 +54,48 @@ function reset(){
 	$("#timer").text(`Time Remaining : ${time} Seconds`);
 }
 
-
-
+var countdown;
 function timer(){
-	setInterval(function(){
-		var displayTime=time--;
-		$("#timer").text(`Time Remaining : ${displayTime} Seconds`);
-	}, 1000)
+	var displayTime;
+	 countdown =setInterval(function(){
+		if (time===0){
+			timeReset();
+			timer();
+		} else{	
+			time--;
+			$("#timer").text(`Time Remaining : ${time} Seconds`);
+		}
+	}, 1000);
+
 }
+function timeReset(){
+		clearInterval(countdown);
+		time=31;
+
+}
+
+//display question
+function newQuestion(){
+	var randomQuestion= questions[Math.floor(Math.random()*questions.length)];
+	$("#question").text(randomQuestion['question']);
+	var arraypossibleChoices = randomQuestion['choices'];
+	for(var i=0; i<arraypossibleChoices.length; i++){
+		var btnChoices = $('<button class="choice btn-block">');
+		$(btnChoices).html(arraypossibleChoices[i]);
+		$('#choices').append(btnChoices);
+	}
+}	
+
+
 
 function startGame(){
 	$("#timer").text(`Time Remaining : ${time} Seconds`);
-	setTimeout(timer(),0);
+	timer();
 	$(".contains-btn").addClass("hidden");
 	$(".game").removeClass("hidden");
 	$(".game").addClass("visible");
+	
+
 }
 
 
@@ -77,4 +104,5 @@ function startGame(){
 $("#startButton").on("click", function(){	
 	startGame();
 	//start game
+	newQuestion();
 })
