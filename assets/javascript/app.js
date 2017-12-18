@@ -1,77 +1,97 @@
 var time=30;
 var questions = [ {
-	question: "What was the name of Brad Pitt's character when he guest starred in The One with the Rumor?",
-	choices: ['Muriel','Will','Jack','Ron'],
-	correctAnswer: 'Will'
+		question: "What was the name of Brad Pitt's character when he guest starred in The One with the Rumor?",
+		choices: ['Muriel','Will','Jack','Ron'],
+		correctAnswer: 'Will',
+		displayImage: 'assets/images/brad-pitt-friends.gif'
 }, {
 		question: "What is Chandler's middle name?",
 		choices: ['Morty','Muriel','Miriam','Milton'],
 		correctAnswer: 'Muriel',
-		displayimage: '.gif'
+		displayImage: 'assets/images/chandlermurielbing.gif'
 	} , {
 		question: "What is Chandler's father's stage name?",
 		choices: ['Helena Handbasket','Lauren Order','Juana Bang','Rue Bella'],
-		correctAnswer: 'Helena Handbasket'
+		correctAnswer: 'Helena Handbasket',
+		displayImage:'assets/images/brad-pitt-friends.gif'
 	}, {
 		question: "How many sisters does Joey have?",
 		choices: ['8', '7', '6', '5'],
-		correctAnswer: '7'
+		correctAnswer: '7',
+		displayImage:'assets/images/Friends_couch.gif'
 	}, {
 		question: "Which of Joey's sisters does Chandler not remember kissing after getting too drunk from jell-o shots?",
 		choices: ['Cookie', 'Mary Therese', 'Dina', 'Mary Angela'],
-		correctAnswer: 'Mary Angela'
+		correctAnswer: 'Mary Angela',
+		displayImage:'assets/images/Friends_couch.gif'
+		
 	}, {
 		question: "Which of these actors/actresses NEVER guest starred in an episode of Friends?",
 		choices: ['Bruce Willis', 'Billy Crystal', 'John Stamos','Debra Messing'],
-		correctAnswer: 'Debra Messing'
+		correctAnswer: 'Debra Messing',
+		displayImage:'assets/images/Friends_couch.gif'
 	}, {
 		question: "What makes Ross' Thanksgiving leftover sandwich so special?",
 		choices: ['It is super big', 'He adds some meatballs into it', 'He has a gravy soaked bread in the middle', 'He puts some marinara sauce to make his sandwich more moist'],
-		correctAnswer: 'He has a gravy soaked bread in the middle'
+		correctAnswer: 'He has a gravy soaked bread in the middle',
+		displayImage:'assets/images/Friends_couch.gif'
 	},  {
 		question: "What is the name of Chandler and Ross's college 'band'?",
 		choices:['Way No Way', 'Emotional Knapsack', 'Betrayal in The Common Room', 'Electric Time'],
-		correctAnswer: 'Way No Way'
+		correctAnswer: 'Way No Way',
+		displayImage:'assets/images/Friends_couch.gif'
 
 	}, {
 		question: "In The One With The Embryos, what phenomenons scares the bejeezus out of Chandler?",
 		choices: ['Animals dressed as humans', 'Michael Flatley, Lord of the Dance', 'The Number 11', 'Ice Cream (it hurts his teeth)'],
-		correctAnswer: 'Michael Flatley, Lord of the Dance'
+		correctAnswer: 'Michael Flatley, Lord of the Dance',
+		displayImage:'assets/images/Friends_couch.gif'
 	}, {
 		question: "What name appears on the address label of Chandler and Joey's TV Guide?",
 		choices: ['Chandler Bing', 'Miriam Bing', 'Chanandler Bong', 'Joey Tribianni'],
-		correctAnswer: 'Chanandler Bong'
+		correctAnswer: 'Chanandler Bong',
+		displayImage:'assets/images/Friends_couch.gif'
 	}, {
 		question: "What is Chandler Bing's job (before he worked in advertising)?",
 		choices: ['Transponster!', 'Transponder', 'Statistical Analysis and Data Reconfiguration', 'Statistician'],
-		correctAnswer: 'Statistical Analysis and Data Reconfiguration'
+		correctAnswer: 'Statistical Analysis and Data Reconfiguration',
+		displayImage: 'assets/images/transponster.gif'
 	}, {
 		question: "Which of these companies/establishments has Rachel not worked in?",
 		choices: ['Central Perk', 'Bloomingdales', 'Louis Vuitton', 'Ralph Lauren'],
-		correctAnswer: 'Louis Vuitton'
-	},
+		correctAnswer: 'Louis Vuitton',
+		displayImage:'assets/images/Friends_couch.gif'
+	},{
+		question: "When Ross was mugged as a kid, the mugger stole his original comic book, who was the hero of that comic book?",
+		choices:['Science Lad', 'Science Boy', 'Dinosaur Tamer', 'T-Rex Man'],
+		correctAnswer: 'Science Boy',
+		displayImage:'assets/images/Friends_couch.gif'
+	}
 ];
 
 //reset game
 function reset(){
 	$("#timer").text(`Time Remaining : ${time} Seconds`);
+	time=30;
 	timeReset();
 	$("#question").empty();
 	$('#choices').empty();
 	randomQuestion= questions[Math.floor(Math.random()*questions.length)];
-	displayQuestion();
-	displayChoices();
+	setTimeout(displayQuestion(), 8000);
+	setTimeout(displayChoices(),8000);	
 }
 
-// function randomQuestion(){
-// 	return questions[Math.floor(Math.random()*questions.length)];
-// }
+//  function randomQuestion(){
+//  	return questions[Math.floor(Math.random()*questions.length)];
+//  }
 var countdown;
 function timer(){
 	var displayTime;
 	 countdown =setInterval(function(){
 		if (time===0){
-			timeReset();
+			alert('Ran out of time!')
+			$(".correctOrwrong").html(`You ran out of time! The correct answer is ${randomQuestion.correctAnswer}. <img src="${randomQuestion.displayImage}>"`);
+			clearoutAnswerDisplayed();
 		} else{	
 			time--;
 			$("#timer").text(`Time Remaining : ${time} Seconds`);
@@ -81,9 +101,17 @@ function timer(){
 }
 function timeReset(){
 		clearInterval(countdown);
-		time=31;
+		// time=31;
 		timer();
 
+}
+
+function clearoutAnswerDisplayed(){
+	clearInterval(countdown);
+	setTimeout(function(){
+		$(".correctOrwrong").empty();
+		reset();
+	}, 5000);
 }
 var randomQuestion= questions[Math.floor(Math.random()*questions.length)];
 
@@ -104,7 +132,12 @@ function displayChoices(){
 		// console.log(randomQuestion);
 		if(this.getAttribute("value")===randomQuestion.correctAnswer){
 			alert('Spot on!');
-			reset();
+			$(".correctOrwrong").html(`You are correct! The correct answer is ${randomQuestion.correctAnswer}. <img src="${randomQuestion.displayImage}">`);
+			clearoutAnswerDisplayed();
+		} else if (this.getAttribute("value")!=randomQuestion.correctAnswer){
+			alert('Incorrect!');
+			$(".correctOrwrong").html(`You are incorrect! The correct answer is ${randomQuestion.correctAnswer}. <img src="${randomQuestion.displayImage}">`);
+			clearoutAnswerDisplayed();
 		}
 	
 	})
@@ -118,8 +151,8 @@ function startGame(){
 	$("#startButton").addClass("hidden");
 	$(".game").removeClass("hidden");
 	$(".game").addClass("visible");
-	
 
+	
 }
 
 // var showAnswer= setTimeout(function(){
@@ -137,12 +170,12 @@ function choosingcorrectAnswer(){
 $("#startButton").on("click", function(){	
 	startGame();
 	//start game
-	displayQuestion();
-	displayChoices();
+	setTimeout(displayQuestion(), 3000);
+	setTimeout(displayChoices(),3000);
+	
 
 
 
-		//if (this.getAttribute("value"))
 		
 		//if answer is right display You are correct / gif using setTimeout, Pick next question // display next question and timer reset
 		//if answer is wrong or run out of time, display 'you are wrong or you ran out of time / with correct answer/ gif using set timeout/ pick next question //display next question 
