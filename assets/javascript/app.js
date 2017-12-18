@@ -6,7 +6,8 @@ var questions = [ {
 }, {
 		question: "What is Chandler's middle name?",
 		choices: ['Morty','Muriel','Miriam','Milton'],
-		correctAnswer: 'Muriel'
+		correctAnswer: 'Muriel',
+		displayimage: '.gif'
 	} , {
 		question: "What is Chandler's father's stage name?",
 		choices: ['Helena Handbasket','Lauren Order','Juana Bang','Rue Bella'],
@@ -50,8 +51,15 @@ var questions = [ {
 		correctAnswer: 'Louis Vuitton'
 	},
 ];
+
+//reset game
 function reset(){
 	$("#timer").text(`Time Remaining : ${time} Seconds`);
+	timeReset();
+	$("#question").empty();
+	$('#choices').empty();
+	randomQuestion =questions[Math.floor(Math.random()*questions.length)];
+	displayQuestion();
 }
 
 var countdown;
@@ -60,7 +68,6 @@ function timer(){
 	 countdown =setInterval(function(){
 		if (time===0){
 			timeReset();
-			timer();
 		} else{	
 			time--;
 			$("#timer").text(`Time Remaining : ${time} Seconds`);
@@ -71,38 +78,68 @@ function timer(){
 function timeReset(){
 		clearInterval(countdown);
 		time=31;
+		timer();
 
 }
+var randomQuestion= questions[Math.floor(Math.random()*questions.length)];
 
 //display question
-function newQuestion(){
-	var randomQuestion= questions[Math.floor(Math.random()*questions.length)];
+function displayQuestion(){
 	$("#question").text(randomQuestion['question']);
 	var arraypossibleChoices = randomQuestion['choices'];
 	for(var i=0; i<arraypossibleChoices.length; i++){
-		var btnChoices = $('<button class="choice btn-block">');
+		var btnChoices = $(`<button id="choice" class="btn-block" value="${arraypossibleChoices[i]}">`);
 		$(btnChoices).html(arraypossibleChoices[i]);
 		$('#choices').append(btnChoices);
 	}
 }	
 
 
-
 function startGame(){
 	$("#timer").text(`Time Remaining : ${time} Seconds`);
 	timer();
 	$(".contains-btn").addClass("hidden");
+	$("#startButton").addClass("hidden");
 	$(".game").removeClass("hidden");
 	$(".game").addClass("visible");
 	
 
 }
 
+// var showAnswer= setTimeout(function(){
+// 	$("#displayCorrectAnswer").text(`The answer is ${randomQuestion.correctAnswer} `)
+// }, 5000)
 
+//player picks the right answer
+function choosingcorrectAnswer(){
+	clearInterval(countdown);
+	showAnswer;
+	reset();
+
+	
+}
 
 
 $("#startButton").on("click", function(){	
 	startGame();
 	//start game
-	newQuestion();
+	displayQuestion();
+	$(".btn-block").on("click", function(){
+		// console.log(this);
+		// console.log(this.getAttribute("value"));
+		// console.log(randomQuestion);
+		if(this.getAttribute("value")===randomQuestion.correctAnswer){
+			alert('Spot on!');
+			choosingcorrectAnswer();
+	
+		}
+	
+	})
+
+
+		//if (this.getAttribute("value"))
+		
+		//if answer is right display You are correct / gif using setTimeout, Pick next question // display next question and timer reset
+		//if answer is wrong or run out of time, display 'you are wrong or you ran out of time / with correct answer/ gif using set timeout/ pick next question //display next question 
 })
+
