@@ -31,7 +31,7 @@ var questions = [ {
 	},  {
 		question: "What is the name of Chandler and Ross's college 'band'?",
 		choices:['Way No Way', 'Emotional Knapsack', 'Betrayal in The Common Room', 'Electric Time'],
-		correctAnswer: 'Electric Time'
+		correctAnswer: 'Way No Way'
 
 	}, {
 		question: "In The One With The Embryos, what phenomenons scares the bejeezus out of Chandler?",
@@ -58,10 +58,14 @@ function reset(){
 	timeReset();
 	$("#question").empty();
 	$('#choices').empty();
-	randomQuestion =questions[Math.floor(Math.random()*questions.length)];
+	randomQuestion= questions[Math.floor(Math.random()*questions.length)];
 	displayQuestion();
+	displayChoices();
 }
 
+// function randomQuestion(){
+// 	return questions[Math.floor(Math.random()*questions.length)];
+// }
 var countdown;
 function timer(){
 	var displayTime;
@@ -86,12 +90,24 @@ var randomQuestion= questions[Math.floor(Math.random()*questions.length)];
 //display question
 function displayQuestion(){
 	$("#question").text(randomQuestion['question']);
+}
+function displayChoices(){
 	var arraypossibleChoices = randomQuestion['choices'];
 	for(var i=0; i<arraypossibleChoices.length; i++){
 		var btnChoices = $(`<button id="choice" class="btn-block" value="${arraypossibleChoices[i]}">`);
 		$(btnChoices).html(arraypossibleChoices[i]);
 		$('#choices').append(btnChoices);
 	}
+	$(".btn-block").on("click", function(){
+		// console.log(this);
+		// console.log(this.getAttribute("value"));
+		// console.log(randomQuestion);
+		if(this.getAttribute("value")===randomQuestion.correctAnswer){
+			alert('Spot on!');
+			reset();
+		}
+	
+	})
 }	
 
 
@@ -113,10 +129,8 @@ function startGame(){
 //player picks the right answer
 function choosingcorrectAnswer(){
 	clearInterval(countdown);
-	showAnswer;
+	// showAnswer;
 	reset();
-
-	
 }
 
 
@@ -124,17 +138,8 @@ $("#startButton").on("click", function(){
 	startGame();
 	//start game
 	displayQuestion();
-	$(".btn-block").on("click", function(){
-		// console.log(this);
-		// console.log(this.getAttribute("value"));
-		// console.log(randomQuestion);
-		if(this.getAttribute("value")===randomQuestion.correctAnswer){
-			alert('Spot on!');
-			choosingcorrectAnswer();
-	
-		}
-	
-	})
+	displayChoices();
+
 
 
 		//if (this.getAttribute("value"))
