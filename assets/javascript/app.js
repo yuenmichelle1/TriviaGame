@@ -13,7 +13,7 @@ var questions = [ {
 		question: "What is Chandler's father's stage name?",
 		choices: ['Helena Handbasket','Lauren Order','Juana Bang','Rue Bella'],
 		correctAnswer: 'Helena Handbasket',
-		displayImage:'assets/images/brad-pitt-friends.gif'
+		displayImage:'assets/images/chandlersdad.jpg'
 	}, {
 		question: "How many sisters does Joey have?",
 		choices: ['8', '7', '6', '5'],
@@ -66,8 +66,15 @@ var questions = [ {
 		choices:['Science Lad', 'Science Boy', 'Dinosaur Tamer', 'T-Rex Man'],
 		correctAnswer: 'Science Boy',
 		displayImage:'assets/images/Friends_couch.gif'
+	},{
+		question: "In The One With Ross' Tan, what tanning grade is Ross' back after many attempts?",
+		choices:[8, 2, 'Puerto Rican', '0 (his front was tan)'],
+		correctAnswer: '0 (his front was tan)',
+		displayImage:'assets/images/Friends_couch.gif'
 	}
 ];
+// queryURL for Giphy API
+var queryURL = "https://api.giphy.com/v1/gifs/search?q=brad+pitt&api_key=dc6zaTOxFJmzC";
 
 //reset game
 function reset(){
@@ -90,7 +97,7 @@ function timer(){
 	 countdown =setInterval(function(){
 		if (time===0){
 			alert('Ran out of time!')
-			$(".correctOrwrong").html(`You ran out of time! The correct answer is ${randomQuestion.correctAnswer}. <img src="${randomQuestion.displayImage}>"`);
+			$(".correctOrwrong").html(`You ran out of time! The correct answer is ${randomQuestion.correctAnswer}. <img src="${randomQuestion.displayImage}" class="center-block">`);
 			clearoutAnswerDisplayed();
 		} else{	
 			time--;
@@ -101,7 +108,6 @@ function timer(){
 }
 function timeReset(){
 		clearInterval(countdown);
-		// time=31;
 		timer();
 
 }
@@ -132,11 +138,11 @@ function displayChoices(){
 		// console.log(randomQuestion);
 		if(this.getAttribute("value")===randomQuestion.correctAnswer){
 			alert('Spot on!');
-			$(".correctOrwrong").html(`You are correct! The correct answer is ${randomQuestion.correctAnswer}. <img src="${randomQuestion.displayImage}">`);
+			$(".correctOrwrong").html(`You are correct! The correct answer is ${randomQuestion.correctAnswer}. <img src="${randomQuestion.displayImage}" class="center-block">`);
 			clearoutAnswerDisplayed();
 		} else if (this.getAttribute("value")!=randomQuestion.correctAnswer){
 			alert('Incorrect!');
-			$(".correctOrwrong").html(`You are incorrect! The correct answer is ${randomQuestion.correctAnswer}. <img src="${randomQuestion.displayImage}">`);
+			$(".correctOrwrong").html(`Nope! The correct answer is ${randomQuestion.correctAnswer}. <img src="${randomQuestion.displayImage}" class="center-block">`);
 			clearoutAnswerDisplayed();
 		}
 	
@@ -155,10 +161,6 @@ function startGame(){
 	
 }
 
-// var showAnswer= setTimeout(function(){
-// 	$("#displayCorrectAnswer").text(`The answer is ${randomQuestion.correctAnswer} `)
-// }, 5000)
-
 //player picks the right answer
 function choosingcorrectAnswer(){
 	clearInterval(countdown);
@@ -170,14 +172,8 @@ function choosingcorrectAnswer(){
 $("#startButton").on("click", function(){	
 	startGame();
 	//start game
-	setTimeout(displayQuestion(), 3000);
-	setTimeout(displayChoices(),3000);
-	
+	setTimeout(displayQuestion(), 5000);
+	setTimeout(displayChoices(),5000);
 
-
-
-		
-		//if answer is right display You are correct / gif using setTimeout, Pick next question // display next question and timer reset
-		//if answer is wrong or run out of time, display 'you are wrong or you ran out of time / with correct answer/ gif using set timeout/ pick next question //display next question 
 })
 

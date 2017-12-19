@@ -1,12 +1,18 @@
 body {
 	background-image: url("../images/Friends_Background_img.png");
+	background-size: cover;
 	font-family: 'Shadows Into Light', cursive, sans-serif;
 	color: rgb(244, 240, 255);
 	font-size: 30px;
+	/* no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover; */
 }
 
 h1 {
-	font-size: 80px;
+	font-size: 70px;
 }
 
 button{
