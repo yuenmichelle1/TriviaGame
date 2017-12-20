@@ -58,9 +58,9 @@ var questions = [ {
 		displayImage: 'assets/images/transponster.gif'
 	}, {
 		question: "Which of these companies/establishments has Rachel not worked in?",
-		choices: ['Central Perk', 'Bloomingdales', 'Louis Vuitton', 'Ralph Lauren'],
-		correctAnswer: 'Louis Vuitton',
-		displayImage:'assets/images/Friends_couch.gif'
+		choices: ['Central Perk', 'Bloomingdales', 'Gucci', 'Ralph Lauren'],
+		correctAnswer: 'Gucci',
+		displayImage:'assets/images/gucci.gif'
 	},{
 		question: "When Ross was mugged as a kid, the mugger stole his original comic book, who was the hero of that comic book?",
 		choices:['Science Lad', 'Science Boy', 'Dinosaur Tamer', 'T-Rex Man'],
@@ -76,13 +76,11 @@ var questions = [ {
 // queryURL for Giphy API
 var queryURL = "https://api.giphy.com/v1/gifs/search?q=brad+pitt&api_key=dc6zaTOxFJmzC";
 
-//reset game
+
 function reset(){
-	$("#timer").text(`Time Remaining : ${time} Seconds`);
 	time=30;
-	timeReset();
-	$("#question").empty();
-	$('#choices').empty();
+	$("#timer").text(`Time Remaining : ${time} Seconds`);
+	timer();
 	randomQuestion= questions[Math.floor(Math.random()*questions.length)];
 	setTimeout(displayQuestion(), 8000);
 	setTimeout(displayChoices(),8000);	
@@ -95,13 +93,14 @@ var countdown;
 function timer(){
 	var displayTime;
 	 countdown =setInterval(function(){
-		if (time===0){
+		if (time===-1){
 			alert('Ran out of time!')
+			emptyQuestions();
 			$(".correctOrwrong").html(`You ran out of time! The correct answer is ${randomQuestion.correctAnswer}. <img src="${randomQuestion.displayImage}" class="center-block">`);
 			clearoutAnswerDisplayed();
 		} else{	
-			time--;
 			$("#timer").text(`Time Remaining : ${time} Seconds`);
+			time--;	
 		}
 	}, 1000);
 
@@ -111,7 +110,10 @@ function timeReset(){
 		timer();
 
 }
-
+function emptyQuestions(){
+	$("#question").empty();
+	$('#choices').empty();
+}
 function clearoutAnswerDisplayed(){
 	clearInterval(countdown);
 	setTimeout(function(){
@@ -138,10 +140,12 @@ function displayChoices(){
 		// console.log(randomQuestion);
 		if(this.getAttribute("value")===randomQuestion.correctAnswer){
 			alert('Spot on!');
+			emptyQuestions();
 			$(".correctOrwrong").html(`You are correct! The correct answer is ${randomQuestion.correctAnswer}. <img src="${randomQuestion.displayImage}" class="center-block">`);
 			clearoutAnswerDisplayed();
 		} else if (this.getAttribute("value")!=randomQuestion.correctAnswer){
 			alert('Incorrect!');
+			emptyQuestions();
 			$(".correctOrwrong").html(`Nope! The correct answer is ${randomQuestion.correctAnswer}. <img src="${randomQuestion.displayImage}" class="center-block">`);
 			clearoutAnswerDisplayed();
 		}
