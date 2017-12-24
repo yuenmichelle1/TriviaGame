@@ -1,4 +1,7 @@
 var time=30;
+var correct=0;
+var incorrect=0;
+var notime=0;
 var questions = [ {
 		question: "What was the name of Brad Pitt's character when he guest starred in The One with the Rumor?",
 		choices: ['Muriel','Will','Jack','Ron'],
@@ -76,7 +79,7 @@ var questions = [ {
 // queryURL for Giphy API
 var queryURL = "https://api.giphy.com/v1/gifs/search?q=brad+pitt&api_key=dc6zaTOxFJmzC";
 
-
+//RESET QUESTIONS
 function reset(){
 	time=30;
 	$("#timer").text(`Time Remaining : ${time} Seconds`);
@@ -93,23 +96,34 @@ var countdown;
 function timer(){
 	var displayTime;
 	 countdown =setInterval(function(){
-		if (time===-1){
+		// if (time===-1){
+		// 	alert('Ran out of time!')
+		// 	emptyQuestions();
+		// 	$(".correctOrwrong").html(`You ran out of time! The correct answer is ${randomQuestion.correctAnswer}. <img src="${randomQuestion.displayImage}" class="center-block">`);
+		// 	clearoutAnswerDisplayed();
+		// 	notime++;
+		// }  else{	
+		// 	$("#timer").text(`Time Remaining : ${time} Seconds`);
+		// 	time--;	
+		// } 
+		if (time>0){
+			$("#timer").text(`Time Remaining : ${time} Seconds`);
+			time--;	
+		} else {
 			alert('Ran out of time!')
 			emptyQuestions();
 			$(".correctOrwrong").html(`You ran out of time! The correct answer is ${randomQuestion.correctAnswer}. <img src="${randomQuestion.displayImage}" class="center-block">`);
 			clearoutAnswerDisplayed();
-		} else{	
-			$("#timer").text(`Time Remaining : ${time} Seconds`);
-			time--;	
-		}
+			notime++;
+		}	
 	}, 1000);
 
 }
-function timeReset(){
-		clearInterval(countdown);
-		timer();
+// function timeReset(){
+// 		clearInterval(countdown);
+// 		timer();
 
-}
+// }
 function emptyQuestions(){
 	$("#question").empty();
 	$('#choices').empty();
@@ -140,30 +154,78 @@ function displayChoices(){
 		// console.log(randomQuestion);
 		if(this.getAttribute("value")===randomQuestion.correctAnswer){
 			alert('Spot on!');
+			correct++;
 			emptyQuestions();
 			$(".correctOrwrong").html(`You are correct! The correct answer is ${randomQuestion.correctAnswer}. <img src="${randomQuestion.displayImage}" class="center-block">`);
 			clearoutAnswerDisplayed();
 		} else if (this.getAttribute("value")!=randomQuestion.correctAnswer){
 			alert('Incorrect!');
+			incorrect++;
 			emptyQuestions();
 			$(".correctOrwrong").html(`Nope! The correct answer is ${randomQuestion.correctAnswer}. <img src="${randomQuestion.displayImage}" class="center-block">`);
 			clearoutAnswerDisplayed();
-		}
+		} 
+		if ((correct + incorrect + notime ) === 5){
+			clearInterval(countdown);;
+			endGame();
+		}		
 	
 	})
 }	
 
 
+
 function startGame(){
+	
 	$("#timer").text(`Time Remaining : ${time} Seconds`);
-	timer();
+
 	$(".contains-btn").addClass("hidden");
 	$("#startButton").addClass("hidden");
 	$(".game").removeClass("hidden");
 	$(".game").addClass("visible");
-
+	$(".endGame").addClass("hidden");
 	
 }
+
+// function endGameDisplay(){
+// 	setTimeout(function(){
+// 		$(".game").removeClass("visible");
+// 		$(".game").addClass("hidden");
+// 		$("#timer").addClass("hidden");
+// 		$(".correctOrwrong").addClass("hidden");
+// 		$(".endGame").removeClass("hidden");
+// 		$(".endGame").addClass("visible");
+// 	}, 4000);
+// 	$("#displayCorrect").html(`<h3> Correct:  ${correct} </h3>`);
+// 	$("#displayIncorrect").html(`<h3> Incorrect:  ${incorrect}</h3>`);
+// 	$("#displayNotime").html(`<h3> Ran Out of Time :  ${notime} </h3>`);
+// 	$("#endButton").html(`<button id="restartButton"> Try Again? </button>`);
+
+// }
+
+
+function endGame(){
+	$("#timer").addClass("hidden");
+	setTimeout(function(){
+		$(".game").removeClass("visible");
+		$(".game").addClass("hidden");
+		$(".correctOrwrong").addClass("hidden");
+		$(".endGame").removeClass("hidden");
+		$(".endGame").addClass("visible");
+	}, 4000);
+	$("#displayCorrect").html(`<h3> Correct:  ${correct} </h3>`);
+	$("#displayIncorrect").html(`<h3> Incorrect:  ${incorrect}</h3>`);
+	$("#displayNotime").html(`<h3> Ran Out of Time :  ${notime} </h3>`);
+	$("#endButton").html(`<button id="restartButton"> Try Again? </button>`);
+	$("#restartButton").on("click", function(){
+		console.log(this);
+		time=30;
+		startGame();	
+	})
+}
+
+
+
 
 //player picks the right answer
 function choosingcorrectAnswer(){
@@ -174,10 +236,14 @@ function choosingcorrectAnswer(){
 
 
 $("#startButton").on("click", function(){	
+	
+	timer();
 	startGame();
 	//start game
 	setTimeout(displayQuestion(), 5000);
 	setTimeout(displayChoices(),5000);
 
 })
+
+
 

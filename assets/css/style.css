@@ -1,6 +1,7 @@
 body {
 	background-image: url("../images/Friends_Background_img.png");
-	background-size: cover;
+	background-size: cover 100%;
+	background-repeat: no-repeat;
 	font-family: 'Shadows Into Light', cursive, sans-serif;
 	color: rgb(244, 240, 255);
 	font-size: 30px;
@@ -41,4 +42,16 @@ button{
 
 .correctOrwrong{
 	background-color: black;
+}
+
+.endGame{
+	background-color: black;
+}
+
+#restartButton{
+	font-size:20px;
+}
+
+#restartButton{
+	margin: 20px;
 }
