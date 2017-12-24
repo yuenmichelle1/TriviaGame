@@ -2,12 +2,13 @@ var time=30;
 var correct=0;
 var incorrect=0;
 var notime=0;
+var countdown;
 var questions = [ {
 		question: "What was the name of Brad Pitt's character when he guest starred in The One with the Rumor?",
 		choices: ['Muriel','Will','Jack','Ron'],
 		correctAnswer: 'Will',
 		displayImage: 'assets/images/brad-pitt-friends.gif'
-}, {
+	}, {
 		question: "What is Chandler's middle name?",
 		choices: ['Morty','Muriel','Miriam','Milton'],
 		correctAnswer: 'Muriel',
@@ -76,6 +77,8 @@ var questions = [ {
 		displayImage:'assets/images/Friends_couch.gif'
 	}
 ];
+
+var randomQuestion= questions[Math.floor(Math.random()*questions.length)];
 // queryURL for Giphy API
 var queryURL = "https://api.giphy.com/v1/gifs/search?q=brad+pitt&api_key=dc6zaTOxFJmzC";
 
@@ -89,10 +92,6 @@ function reset(){
 	setTimeout(displayChoices(),8000);	
 }
 
-//  function randomQuestion(){
-//  	return questions[Math.floor(Math.random()*questions.length)];
-//  }
-var countdown;
 
 function decrementTimer() {
     if (time>0){
@@ -100,7 +99,8 @@ function decrementTimer() {
         $("#timer").text(`Time Remaining : ${time} Seconds`);
     } else {
         alert('Ran out of time!')
-        emptyQuestions();
+		emptyQuestions();
+		$(".correctOrwrong").addClass("visible");
         $(".correctOrwrong").html(`You ran out of time! The correct answer is ${randomQuestion.correctAnswer}. <img src="${randomQuestion.displayImage}" class="center-block">`);
         clearoutAnswerDisplayed();
         notime++;
@@ -108,18 +108,13 @@ function decrementTimer() {
 }
 
 function timer(){
-    var displayTime;
-	countdown = setInterval(decrementTimer, 1000);
 	if ((correct + incorrect + notime ) === 5){
-		clearInterval(countdown);;
-		endGame(); 
-	}	
+		clearInterval(countdown);
+	}else{
+	countdown = setInterval(decrementTimer, 1000);
+	}
 }
-// function timeReset(){
-// 		clearInterval(countdown);
-// 		timer();
 
-// }
 function emptyQuestions(){
 	$("#question").empty();
 	$('#choices').empty();
@@ -131,7 +126,6 @@ function clearoutAnswerDisplayed(){
 		reset();
 	}, 5000);
 }
-var randomQuestion= questions[Math.floor(Math.random()*questions.length)];
 
 //display question
 function displayQuestion(){
@@ -145,19 +139,18 @@ function displayChoices(){
 		$('#choices').append(btnChoices);
 	}
 	$(".btn-block").on("click", function(){
-		// console.log(this);
-		// console.log(this.getAttribute("value"));
-		// console.log(randomQuestion);
 		if(this.getAttribute("value")===randomQuestion.correctAnswer){
 			alert('Spot on!');
 			correct++;
 			emptyQuestions();
+			$(".correctOrwrong").addClass("visible");
 			$(".correctOrwrong").html(`You are correct! The correct answer is ${randomQuestion.correctAnswer}. <img src="${randomQuestion.displayImage}" class="center-block">`);
 			clearoutAnswerDisplayed();
-		} else if (this.getAttribute("value")!=randomQuestion.correctAnswer){
+		} else if (this.getAttribute("value")!=randomQuestion.correctAnswer && (correct + incorrect + notime ) != 5){
 			alert('Incorrect!');
 			incorrect++;
 			emptyQuestions();
+			$(".correctOrwrong").addClass("visible");
 			$(".correctOrwrong").html(`Nope! The correct answer is ${randomQuestion.correctAnswer}. <img src="${randomQuestion.displayImage}" class="center-block">`);
 			clearoutAnswerDisplayed();
 		} 
@@ -172,7 +165,6 @@ function displayChoices(){
 
 
 function startGame(){
-	
 	$("#timer").text(`Time Remaining : ${time} Seconds`);
 	$(".contains-btn").addClass("hidden");
 	$("#startButton").addClass("hidden");
@@ -184,45 +176,47 @@ function startGame(){
 
 function endGame(){
 	$("#timer").addClass("hidden");
-	setTimeout(function(){
-		$(".game").removeClass("visible");
-		$(".game").addClass("hidden");
-		$(".correctOrwrong").addClass("hidden");
-		$(".endGame").removeClass("hidden");
-		$(".endGame").addClass("visible");
-	}, 4000);
+	$(".game").removeClass("visible");
+	$(".game").addClass("hidden");
+	$(".correctOrwrong").addClass("hidden");
+	$(".endGame").removeClass("hidden");
+	$(".endGame").addClass("visible");
 	$("#displayCorrect").html(`<h3> Correct:  ${correct} </h3>`);
 	$("#displayIncorrect").html(`<h3> Incorrect:  ${incorrect}</h3>`);
 	$("#displayNotime").html(`<h3> Ran Out of Time :  ${notime} </h3>`);
-	$("#endButton").html(`<button id="restartButton"> Try Again? </button>`);
-	$("#restartButton").on("click", function(){
-		console.log(this);
-		time=30;
-		timer();
-		startGame();
-	})
-}
-
-
-
-
-//player picks the right answer
-function choosingcorrectAnswer(){
-	clearInterval(countdown);
-	// showAnswer;
-	reset();
+	$("#restartButton").removeClass("hidden");
+	$("#restartButton").addClass("visible");
 }
 
 
 $("#startButton").on("click", function(){	
-	
 	timer();
 	startGame();
-	//start game
 	displayQuestion();
 	displayChoices();
 
 })
+
+$("#restartButton").on("click", function(){
+	$("#restartButton").removeClass("visible");
+	$("#restartButton").addClass("hidden");
+	emptyQuestions();
+	correct=0;
+	incorrect=0;
+	notime=0;
+	time=30;
+	console.log(this);
+	randomQuestion= questions[Math.floor(Math.random()*questions.length)];
+	$("#timer").text(`Time Remaining : ${time} Seconds`);
+	$(".game").removeClass("hidden");
+	$(".game").addClass("visible");
+	$(".endGame").addClass("hidden");
+	displayQuestion();
+	displayChoices();
+	
+})
+	
+	
 
 
 
