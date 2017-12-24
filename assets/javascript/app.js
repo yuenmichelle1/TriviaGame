@@ -93,31 +93,27 @@ function reset(){
 //  	return questions[Math.floor(Math.random()*questions.length)];
 //  }
 var countdown;
-function timer(){
-	var displayTime;
-	 countdown =setInterval(function(){
-		// if (time===-1){
-		// 	alert('Ran out of time!')
-		// 	emptyQuestions();
-		// 	$(".correctOrwrong").html(`You ran out of time! The correct answer is ${randomQuestion.correctAnswer}. <img src="${randomQuestion.displayImage}" class="center-block">`);
-		// 	clearoutAnswerDisplayed();
-		// 	notime++;
-		// }  else{	
-		// 	$("#timer").text(`Time Remaining : ${time} Seconds`);
-		// 	time--;	
-		// } 
-		if (time>0){
-			$("#timer").text(`Time Remaining : ${time} Seconds`);
-			time--;	
-		} else {
-			alert('Ran out of time!')
-			emptyQuestions();
-			$(".correctOrwrong").html(`You ran out of time! The correct answer is ${randomQuestion.correctAnswer}. <img src="${randomQuestion.displayImage}" class="center-block">`);
-			clearoutAnswerDisplayed();
-			notime++;
-		}	
-	}, 1000);
 
+function decrementTimer() {
+    if (time>0){
+        time--;
+        $("#timer").text(`Time Remaining : ${time} Seconds`);
+    } else {
+        alert('Ran out of time!')
+        emptyQuestions();
+        $(".correctOrwrong").html(`You ran out of time! The correct answer is ${randomQuestion.correctAnswer}. <img src="${randomQuestion.displayImage}" class="center-block">`);
+        clearoutAnswerDisplayed();
+        notime++;
+    }
+}
+
+function timer(){
+    var displayTime;
+	countdown = setInterval(decrementTimer, 1000);
+	if ((correct + incorrect + notime ) === 5){
+		clearInterval(countdown);;
+		endGame(); 
+	}	
 }
 // function timeReset(){
 // 		clearInterval(countdown);
@@ -178,30 +174,12 @@ function displayChoices(){
 function startGame(){
 	
 	$("#timer").text(`Time Remaining : ${time} Seconds`);
-
 	$(".contains-btn").addClass("hidden");
 	$("#startButton").addClass("hidden");
 	$(".game").removeClass("hidden");
 	$(".game").addClass("visible");
 	$(".endGame").addClass("hidden");
-	
 }
-
-// function endGameDisplay(){
-// 	setTimeout(function(){
-// 		$(".game").removeClass("visible");
-// 		$(".game").addClass("hidden");
-// 		$("#timer").addClass("hidden");
-// 		$(".correctOrwrong").addClass("hidden");
-// 		$(".endGame").removeClass("hidden");
-// 		$(".endGame").addClass("visible");
-// 	}, 4000);
-// 	$("#displayCorrect").html(`<h3> Correct:  ${correct} </h3>`);
-// 	$("#displayIncorrect").html(`<h3> Incorrect:  ${incorrect}</h3>`);
-// 	$("#displayNotime").html(`<h3> Ran Out of Time :  ${notime} </h3>`);
-// 	$("#endButton").html(`<button id="restartButton"> Try Again? </button>`);
-
-// }
 
 
 function endGame(){
@@ -220,7 +198,8 @@ function endGame(){
 	$("#restartButton").on("click", function(){
 		console.log(this);
 		time=30;
-		startGame();	
+		timer();
+		startGame();
 	})
 }
 
@@ -240,8 +219,8 @@ $("#startButton").on("click", function(){
 	timer();
 	startGame();
 	//start game
-	setTimeout(displayQuestion(), 5000);
-	setTimeout(displayChoices(),5000);
+	displayQuestion();
+	displayChoices();
 
 })
 

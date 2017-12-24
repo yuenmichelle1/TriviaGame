@@ -1,7 +1,12 @@
+
+
 body {
 	background-image: url("../images/Friends_Background_img.png");
-	background-size: cover 100%;
-	background-repeat: no-repeat;
+	/* Full height */
+	height: 100%; 
+		/* Center and scale the image nicely */
+	
+	background-size: cover;
 	font-family: 'Shadows Into Light', cursive, sans-serif;
 	color: rgb(244, 240, 255);
 	font-size: 30px;
