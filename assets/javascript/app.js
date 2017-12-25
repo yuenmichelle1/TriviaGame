@@ -88,8 +88,8 @@ function reset(){
 	$("#timer").text(`Time Remaining : ${time} Seconds`);
 	timer();
 	randomQuestion= questions[Math.floor(Math.random()*questions.length)];
-	setTimeout(displayQuestion(), 8000);
-	setTimeout(displayChoices(),8000);	
+	displayQuestion();
+	displayChoices();
 }
 
 
@@ -100,6 +100,7 @@ function decrementTimer() {
     } else {
         alert('Ran out of time!')
 		emptyQuestions();
+		$(".correctOrwrong").removeClass("hidden");
 		$(".correctOrwrong").addClass("visible");
         $(".correctOrwrong").html(`You ran out of time! The correct answer is ${randomQuestion.correctAnswer}. <img src="${randomQuestion.displayImage}" class="center-block">`);
         clearoutAnswerDisplayed();
@@ -124,7 +125,7 @@ function clearoutAnswerDisplayed(){
 	setTimeout(function(){
 		$(".correctOrwrong").empty();
 		reset();
-	}, 5000);
+	}, 2000);
 }
 
 //display question
@@ -139,24 +140,27 @@ function displayChoices(){
 		$('#choices').append(btnChoices);
 	}
 	$(".btn-block").on("click", function(){
-		if(this.getAttribute("value")===randomQuestion.correctAnswer){
+		if(this.getAttribute("value")===randomQuestion.correctAnswer && (correct + incorrect + notime ) != 5){
 			alert('Spot on!');
 			correct++;
 			emptyQuestions();
+			$(".correctOrwrong").removeClass("hidden");
 			$(".correctOrwrong").addClass("visible");
 			$(".correctOrwrong").html(`You are correct! The correct answer is ${randomQuestion.correctAnswer}. <img src="${randomQuestion.displayImage}" class="center-block">`);
 			clearoutAnswerDisplayed();
+			
 		} else if (this.getAttribute("value")!=randomQuestion.correctAnswer && (correct + incorrect + notime ) != 5){
 			alert('Incorrect!');
 			incorrect++;
 			emptyQuestions();
+			$(".correctOrwrong").removeClass("hidden");
 			$(".correctOrwrong").addClass("visible");
 			$(".correctOrwrong").html(`Nope! The correct answer is ${randomQuestion.correctAnswer}. <img src="${randomQuestion.displayImage}" class="center-block">`);
 			clearoutAnswerDisplayed();
-		} 
-		if ((correct + incorrect + notime ) === 5){
-			clearInterval(countdown);;
+			
+		} else if ((correct + incorrect + notime ) === 5){
 			endGame();
+			clearInterval(countdown);
 		}		
 	
 	})
@@ -204,15 +208,18 @@ $("#restartButton").on("click", function(){
 	correct=0;
 	incorrect=0;
 	notime=0;
-	time=30;
 	console.log(this);
 	randomQuestion= questions[Math.floor(Math.random()*questions.length)];
+	timer();
 	$("#timer").text(`Time Remaining : ${time} Seconds`);
 	$(".game").removeClass("hidden");
 	$(".game").addClass("visible");
 	$(".endGame").addClass("hidden");
 	displayQuestion();
 	displayChoices();
+
+
+
 	
 })
 	
