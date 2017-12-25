@@ -38,12 +38,12 @@ var questions = [ {
 		question: "What makes Ross' Thanksgiving leftover sandwich so special?",
 		choices: ['It is super big', 'He adds some meatballs into it', 'He has a gravy soaked bread in the middle', 'He puts some marinara sauce to make his sandwich more moist'],
 		correctAnswer: 'He has a gravy soaked bread in the middle',
-		displayImage:'assets/images/Friends_couch.gif'
+		displayImage:'assets/images/ross_sandwich.gif'
 	},  {
 		question: "What is the name of Chandler and Ross's college 'band'?",
 		choices:['Way No Way', 'Emotional Knapsack', 'Betrayal in The Common Room', 'Electric Time'],
 		correctAnswer: 'Way No Way',
-		displayImage:'assets/images/Friends_couch.gif'
+		displayImage:'assets/images/noway.gif'
 
 	}, {
 		question: "In The One With The Embryos, what phenomenons scares the bejeezus out of Chandler?",
@@ -54,7 +54,7 @@ var questions = [ {
 		question: "What name appears on the address label of Chandler and Joey's TV Guide?",
 		choices: ['Chandler Bing', 'Miriam Bing', 'Chanandler Bong', 'Joey Tribianni'],
 		correctAnswer: 'Chanandler Bong',
-		displayImage:'assets/images/Friends_couch.gif'
+		displayImage:'assets/images/miss_bong.gif'
 	}, {
 		question: "What is Chandler Bing's job (before he worked in advertising)?",
 		choices: ['Transponster!', 'Transponder', 'Statistical Analysis and Data Reconfiguration', 'Statistician'],
@@ -74,8 +74,30 @@ var questions = [ {
 		question: "In The One With Ross' Tan, what tanning grade is Ross' back after many attempts?",
 		choices:[8, 2, 'Puerto Rican', '0 (his front was tan)'],
 		correctAnswer: '0 (his front was tan)',
+		displayImage:'assets/images/ross_tan.gif'
+	},{
+		question: "Where does David the scientist (Phoebe's boyfriend) move to?",
+		choices:['Moscow', 'Budapest', 'Buenos Aires', 'Minsk'],
+		correctAnswer: 'Minsk',
+		displayImage:'assets/images/Friends_couch.gif'
+	}, {
+		question: "What is Rachel's middle name?",
+		choices:['Emily', 'Emma', 'Karen', 'Elizabeth'],
+		correctAnswer: 'Karen',
+		displayImage:'assets/images/Friends_couch.gif'
+	}, {
+		question: "What was Ross' excuse for kissing Rachel in high school?",
+		choices:['He fell', 'He needed chapstick', 'He needed practice', 'He was asking her out'],
+		correctAnswer: 'He needed chapstick',
+		displayImage:'assets/images/Friends_couch.gif'
+	}, {
+		question: "What is the name of Mike's parent's dog",
+		choices:['Lapooh', 'Chichi', 'Chappy', 'Korndaddy'],
+		correctAnswer: 'Chappy',
 		displayImage:'assets/images/Friends_couch.gif'
 	}
+
+
 ];
 
 var randomQuestion= questions[Math.floor(Math.random()*questions.length)];
@@ -125,7 +147,7 @@ function clearoutAnswerDisplayed(){
 	setTimeout(function(){
 		$(".correctOrwrong").empty();
 		reset();
-	}, 3000);
+	}, 4000);
 }
 
 //display question
@@ -217,9 +239,6 @@ $("#restartButton").on("click", function(){
 	$(".endGame").addClass("hidden");
 	displayQuestion();
 	displayChoices();
-
-
-
 	
 })
 	

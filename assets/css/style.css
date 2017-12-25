@@ -1,20 +1,21 @@
 
 
-body {
+html{
 	background-image: url("../images/Friends_Background_img.png");
 	/* Full height */
 	height: 100%; 
 		/* Center and scale the image nicely */
-	
 	background-size: cover;
+	background-attachment: fixed;
+    background-position: center; 
+}
+body {
+	margin-top:5%;
+	background-color: black;
+	opacity: 0.86;
 	font-family: 'Shadows Into Light', cursive, sans-serif;
 	color: rgb(244, 240, 255);
 	font-size: 30px;
-	/* no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover; */
 }
 
 h1 {
@@ -25,14 +26,17 @@ button{
 	width: 200px;
 	height: 90px;
 	color: black;
+	opacity: 1;
 	background-color: white;
 	font-size: 50px;
 }
 
 .contains-btn {
+	opacity: 1;
 	margin-top: 200px;
 }
 #choice{
+	opacity: 1;
 	font-size: 20px;
 	margin-bottom: 20px;
 	height: 50px;
@@ -40,6 +44,7 @@ button{
 }
 
 #question{
+	opacity: 1;
 	margin: 30px auto;
 	background-color: black;
 }
@@ -50,13 +55,16 @@ button{
 }
 
 .endGame{
+	opacity: 1;
 	background-color: black;
 }
 
 #restartButton{
+	opacity: 1;
 	font-size:20px;
 }
 
 #restartButton{
+	opacity: 1;
 	margin: 20px;
 }
