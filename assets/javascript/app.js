@@ -110,7 +110,7 @@ function decrementTimer() {
 
 function timer(){
 	if ((correct + incorrect + notime ) === 5){
-		clearInterval(countdown);
+		endGame();
 	}else{
 	countdown = setInterval(decrementTimer, 1000);
 	}
@@ -125,7 +125,7 @@ function clearoutAnswerDisplayed(){
 	setTimeout(function(){
 		$(".correctOrwrong").empty();
 		reset();
-	}, 2000);
+	}, 3000);
 }
 
 //display question
@@ -160,7 +160,6 @@ function displayChoices(){
 			
 		} else if ((correct + incorrect + notime ) === 5){
 			endGame();
-			clearInterval(countdown);
 		}		
 	
 	})
@@ -190,6 +189,7 @@ function endGame(){
 	$("#displayNotime").html(`<h3> Ran Out of Time :  ${notime} </h3>`);
 	$("#restartButton").removeClass("hidden");
 	$("#restartButton").addClass("visible");
+	clearInterval(countdown);
 }
 
 
